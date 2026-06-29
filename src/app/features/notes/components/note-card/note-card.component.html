@@ -1,0 +1,8 @@
+<a class="note-card" [routerLink]="['/notes', note().id]">
+  <div class="note-card__header">
+    <h3 class="note-card__title">{{ note().title }}</h3>
+    <span class="note-card__date">{{ note().updatedAt | timeAgo }}</span>
+  </div>
+  <p class="note-card__preview">{{ note().content }}</p>
+  <app-tag-list [tags]="note().tags" />
+</a>

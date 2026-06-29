@@ -1,0 +1,18 @@
+<app-page-header
+  title="Projects"
+  subtitle="Portfolio de vos projets personnels avec stack, difficultés et leçons apprises."
+/>
+
+@if (projects().length === 0) {
+  <app-empty-state
+    icon="folder_open"
+    title="Aucun projet"
+    message="Vos projets apparaîtront ici une fois ajoutés."
+  />
+} @else {
+  <div class="projects-grid">
+    @for (project of projects(); track project.id) {
+      <app-project-card [project]="project" />
+    }
+  </div>
+}

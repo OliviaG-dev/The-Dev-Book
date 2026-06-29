@@ -1,0 +1,7 @@
+@if (tags().length > 0) {
+  <ul class="tag-list" [class]="'tag-list--' + size()">
+    @for (tag of tags(); track tag) {
+      <li class="tag-list__item">{{ tag }}</li>
+    }
+  </ul>
+}

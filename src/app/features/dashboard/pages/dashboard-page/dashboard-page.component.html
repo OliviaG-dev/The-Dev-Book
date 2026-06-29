@@ -1,0 +1,52 @@
+<app-page-header
+  title="Dashboard"
+  subtitle="Vue d'ensemble de votre bibliothèque de développeur."
+/>
+
+<section class="stats-grid">
+  <app-stat-card
+    label="Projets"
+    [value]="stats().projectsCount"
+    icon="folder"
+    accent="projects"
+  />
+  <app-stat-card
+    label="Prompts"
+    [value]="stats().promptsCount"
+    icon="auto_awesome"
+    accent="prompts"
+  />
+  <app-stat-card
+    label="Notes"
+    [value]="stats().notesCount"
+    icon="note"
+    accent="notes"
+  />
+</section>
+
+<section class="recent-activity">
+  <h2 class="section-title">Dernières modifications</h2>
+
+  @if (recentActivity().length === 0) {
+    <p class="empty-message">Aucune activité récente.</p>
+  } @else {
+    <ul class="activity-list">
+      @for (item of recentActivity(); track item.id) {
+        <li>
+          <a class="activity-item" [routerLink]="item.route">
+            <div class="activity-item__icon">
+              <mat-icon>{{ activityIcons[item.type] }}</mat-icon>
+            </div>
+            <div class="activity-item__content">
+              <span class="activity-item__title">{{ item.title }}</span>
+              <span class="activity-item__meta">
+                {{ activityLabels[item.type] }} · {{ item.updatedAt | timeAgo }}
+              </span>
+            </div>
+            <mat-icon class="activity-item__arrow">chevron_right</mat-icon>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

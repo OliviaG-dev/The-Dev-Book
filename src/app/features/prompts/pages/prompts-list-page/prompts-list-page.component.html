@@ -1,0 +1,37 @@
+<app-page-header
+  title="Prompts"
+  subtitle="Bibliothèque de prompts IA organisés par catégorie."
+/>
+
+<div class="category-filters">
+  <button
+    class="category-filter"
+    [class.category-filter--active]="selectedCategory() === 'all'"
+    (click)="selectCategory('all')"
+  >
+    Tous
+  </button>
+  @for (category of categories(); track category) {
+    <button
+       class="category-filter"
+      [class.category-filter--active]="selectedCategory() === category"
+      (click)="selectCategory(category)"
+    >
+      {{ category }}
+    </button>
+  }
+</div>
+
+@if (filteredPrompts().length === 0) {
+  <app-empty-state
+    icon="auto_awesome"
+    title="Aucun prompt"
+    message="Aucun prompt dans cette catégorie."
+  />
+} @else {
+  <div class="prompts-grid">
+    @for (prompt of filteredPrompts(); track prompt.id) {
+      <app-prompt-card [prompt]="prompt" />
+    }
+  </div>
+}

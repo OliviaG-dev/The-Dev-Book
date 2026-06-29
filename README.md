@@ -1,59 +1,166 @@
-# TheDevBook
+# The Dev Book
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.17.
+Bibliothèque vivante pour développeur — un mélange entre Notion, Obsidian et un portfolio technique.
 
-## Development server
+Centralise vos projets, documentation, prompts IA, notes d'apprentissage et (à terme) vos données GitHub.
 
-To start a local development server, run:
+## Vision
 
-```bash
-ng serve
+The Dev Book est une application web personnelle pensée comme :
+
+- un **portfolio développeur** structuré ;
+- une **base de connaissances** pour consolider l'apprentissage ;
+- une **bibliothèque de prompts IA** réutilisables ;
+- un projet **pédagogique Angular** démontrant une architecture professionnelle.
+
+## Stack technique
+
+### Frontend (actuel)
+
+- Angular 21 — Standalone Components
+- TypeScript
+- SCSS
+- Angular Material
+- Angular Router
+- Angular Signals
+- SSR (Angular Universal)
+
+### Backend (prévu)
+
+- Node.js
+- Express
+- PostgreSQL
+
+### Intégrations futures
+
+- GitHub API
+- Génération PDF
+- Authentification
+- Synchronisation Cloud
+
+## Fonctionnalités
+
+### V1 — En place
+
+| Section | Description |
+|---------|-------------|
+| **Dashboard** | Compteurs (projets, prompts, notes) et dernières modifications |
+| **Projects** | Liste et fiches détail (stack, difficultés, leçons apprises, sections) |
+| **Prompts** | Bibliothèque filtrable par catégorie (Cursor, Angular, Playwright, CI/CD…) |
+| **Notes** | Base de connaissances personnelle avec tags |
+| **Settings** | Placeholder pour les futures options |
+
+### V2 — Prévu
+
+- Synchronisation GitHub
+- Statistiques des repositories
+- Recherche globale
+- Filtres et tags avancés
+
+### V3 — Prévu
+
+- Éditeur Markdown
+- Historique des modifications
+- Favoris
+- Organisation avancée des contenus
+
+### V4 — Prévu
+
+- Authentification
+- Génération PDF
+- Export Markdown
+- Synchronisation Cloud
+
+## Architecture
+
+```
+src/app/
+├── core/
+│   ├── models/       # Project, Prompt, Note, ActivityItem
+│   └── services/     # Services avec Signals + données mockées
+├── shared/
+│   ├── components/   # StatCard, PageHeader, TagList, EmptyState
+│   └── pipes/        # TimeAgoPipe
+├── features/
+│   ├── dashboard/
+│   ├── projects/
+│   ├── prompts/
+│   ├── notes/
+│   └── settings/
+└── layouts/
+    └── main-layout/  # Sidebar + zone de contenu
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Conventions
 
-## Code scaffolding
+- Composants **standalone** uniquement
+- État réactif via **Signals** dans les services
+- **Lazy loading** des pages feature
+- Données mockées en attendant le backend (`API_CONFIG` prêt pour les appels HTTP)
+- Design sombre inspiré de Notion, Obsidian, Linear et GitHub
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Démarrage
 
-```bash
-ng generate component component-name
-```
+### Prérequis
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Node.js 20+
+- npm 10+
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Installation
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Serveur de développement
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+Ouvrir [http://localhost:4200](http://localhost:4200). L'application se recharge automatiquement à chaque modification.
 
-For end-to-end (e2e) testing, run:
+### Build production
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Les artefacts sont générés dans `dist/the-dev-book/`.
 
-## Additional Resources
+### Tests unitaires
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm test
+```
+
+## Routes
+
+| Route | Page |
+|-------|------|
+| `/dashboard` | Vue d'ensemble |
+| `/projects` | Liste des projets |
+| `/projects/:id` | Détail d'un projet |
+| `/prompts` | Bibliothèque de prompts |
+| `/prompts/:id` | Détail d'un prompt |
+| `/notes` | Liste des notes |
+| `/notes/:id` | Détail d'une note |
+| `/settings` | Paramètres (placeholder) |
+
+## Objectifs pédagogiques
+
+Ce projet permet de pratiquer :
+
+- Composants Angular standalone
+- Routing et lazy loading
+- Services et injection de dépendances
+- Signals et état réactif
+- Angular Material
+- Architecture feature-based
+- Préparation à une connexion API backend
+
+## Ressources
+
+- [Angular Documentation](https://angular.dev)
+- [Angular CLI](https://angular.dev/tools/cli)
+- [Angular Material](https://material.angular.io)

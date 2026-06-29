@@ -1,0 +1,18 @@
+<app-page-header
+  title="Notes"
+  subtitle="Base de connaissances personnelle pour consolider votre apprentissage."
+/>
+
+@if (notes().length === 0) {
+  <app-empty-state
+    icon="note"
+    title="Aucune note"
+    message="Vos notes d'apprentissage apparaîtront ici."
+  />
+} @else {
+  <div class="notes-grid">
+    @for (note of notes(); track note.id) {
+      <app-note-card [note]="note" />
+    }
+  </div>
+}

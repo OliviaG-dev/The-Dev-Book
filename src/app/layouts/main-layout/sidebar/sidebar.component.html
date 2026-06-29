@@ -1,0 +1,28 @@
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <mat-icon class="sidebar__logo">menu_book</mat-icon>
+    <div class="sidebar__brand-text">
+      <span class="sidebar__title">The Dev Book</span>
+      <span class="sidebar__subtitle">Bibliothèque vivante</span>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav" aria-label="Navigation principale">
+    @for (item of navItems; track item.route) {
+      <a
+        class="sidebar__link"
+        [routerLink]="item.route"
+        routerLinkActive="sidebar__link--active"
+        [matTooltip]="item.label"
+        matTooltipPosition="right"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <footer class="sidebar__footer">
+    <span class="sidebar__version">v1.0 — Portfolio Angular</span>
+  </footer>
+</aside>

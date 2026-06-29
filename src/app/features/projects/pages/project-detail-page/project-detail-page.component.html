@@ -1,0 +1,61 @@
+@if (project(); as project) {
+  <a class="back-link" routerLink="/projects">
+    <mat-icon>arrow_back</mat-icon>
+    Retour aux projets
+  </a>
+
+  <header class="project-header">
+    <h1 class="project-header__title">{{ project.name }}</h1>
+    <p class="project-header__description">{{ project.description }}</p>
+    <div class="project-header__meta">
+      <span>Mis à jour {{ project.updatedAt | timeAgo }}</span>
+      @if (project.githubUrl) {
+        <a [href]="project.githubUrl" target="_blank" rel="noopener" class="external-link">
+          <mat-icon>code</mat-icon>
+          GitHub
+        </a>
+      }
+      @if (project.demoUrl) {
+        <a [href]="project.demoUrl" target="_blank" rel="noopener" class="external-link">
+          <mat-icon>open_in_new</mat-icon>
+          Demo
+        </a>
+      }
+    </div>
+    <app-tag-list [tags]="project.technologies" size="md" />
+  </header>
+
+  @for (section of project.sections; track section.title) {
+    <section class="content-section">
+      <h2 class="content-section__title">{{ section.title }}</h2>
+      <p class="content-section__body">{{ section.content }}</p>
+    </section>
+  }
+
+  @if (project.difficulties.length > 0) {
+    <section class="content-section">
+      <h2 class="content-section__title">Difficultés rencontrées</h2>
+      <ul class="bullet-list">
+        @for (item of project.difficulties; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </section>
+  }
+
+  @if (project.lessonsLearned.length > 0) {
+    <section class="content-section">
+      <h2 class="content-section__title">Leçons apprises</h2>
+      <ul class="bullet-list bullet-list--accent">
+        @for (item of project.lessonsLearned; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </section>
+  }
+} @else {
+  <div class="not-found">
+    <h1>Projet introuvable</h1>
+    <a routerLink="/projects">Retour aux projets</a>
+  </div>
+}

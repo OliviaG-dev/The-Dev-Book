@@ -1,0 +1,28 @@
+@if (prompt(); as prompt) {
+  <a class="back-link" routerLink="/prompts">
+    <mat-icon>arrow_back</mat-icon>
+    Retour aux prompts
+  </a>
+
+  <header class="prompt-header">
+    <span class="prompt-header__category">{{ prompt.category }}</span>
+    <h1 class="prompt-header__title">{{ prompt.title }}</h1>
+    <p class="prompt-header__description">{{ prompt.description }}</p>
+    <div class="prompt-header__meta">
+      <span>Créé le {{ prompt.createdAt | timeAgo }}</span>
+      <span>·</span>
+      <span>Mis à jour {{ prompt.updatedAt | timeAgo }}</span>
+    </div>
+    <app-tag-list [tags]="prompt.tags" size="md" />
+  </header>
+
+  <section class="prompt-content">
+    <h2 class="prompt-content__label">Contenu du prompt</h2>
+    <pre class="prompt-content__body">{{ prompt.content }}</pre>
+  </section>
+} @else {
+  <div class="not-found">
+    <h1>Prompt introuvable</h1>
+    <a routerLink="/prompts">Retour aux prompts</a>
+  </div>
+}

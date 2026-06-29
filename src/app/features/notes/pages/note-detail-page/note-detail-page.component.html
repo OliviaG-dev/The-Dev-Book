@@ -1,0 +1,23 @@
+@if (note(); as note) {
+  <a class="back-link" routerLink="/notes">
+    <mat-icon>arrow_back</mat-icon>
+    Retour aux notes
+  </a>
+
+  <header class="note-header">
+    <h1 class="note-header__title">{{ note.title }}</h1>
+    <div class="note-header__meta">
+      <span>Mis à jour {{ note.updatedAt | timeAgo }}</span>
+    </div>
+    <app-tag-list [tags]="note.tags" size="md" />
+  </header>
+
+  <article class="note-content">
+    <pre class="note-content__body">{{ note.content }}</pre>
+  </article>
+} @else {
+  <div class="not-found">
+    <h1>Note introuvable</h1>
+    <a routerLink="/notes">Retour aux notes</a>
+  </div>
+}

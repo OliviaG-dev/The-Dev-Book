@@ -1,0 +1,8 @@
+<a class="project-card" [routerLink]="['/projects', project().id]">
+  <div class="project-card__header">
+    <h3 class="project-card__title">{{ project().name }}</h3>
+    <span class="project-card__date">{{ project().updatedAt | timeAgo }}</span>
+  </div>
+  <p class="project-card__description">{{ project().description }}</p>
+  <app-tag-list [tags]="project().technologies" />
+</a>

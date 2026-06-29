@@ -1,0 +1,9 @@
+<a class="prompt-card" [routerLink]="['/prompts', prompt().id]">
+  <div class="prompt-card__header">
+    <span class="prompt-card__category">{{ prompt().category }}</span>
+    <span class="prompt-card__date">{{ prompt().updatedAt | timeAgo }}</span>
+  </div>
+  <h3 class="prompt-card__title">{{ prompt().title }}</h3>
+  <p class="prompt-card__description">{{ prompt().description }}</p>
+  <app-tag-list [tags]="prompt().tags" />
+</a>
