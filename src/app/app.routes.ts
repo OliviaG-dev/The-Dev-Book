@@ -64,6 +64,13 @@ export const routes: Routes = [
             (m) => m.SettingsPageComponent,
           ),
       },
+      {
+        path: 'search',
+        loadComponent: () =>
+          import('./features/search/pages/search-results-page/search-results-page.component').then(
+            (m) => m.SearchResultsPageComponent,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },

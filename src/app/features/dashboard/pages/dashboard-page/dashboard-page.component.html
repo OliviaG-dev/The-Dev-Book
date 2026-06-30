@@ -22,6 +22,26 @@
     icon="note"
     accent="notes"
   />
+  <app-stat-card
+    label="Stars GitHub"
+    [value]="githubStats().totalStars"
+    icon="star"
+    accent="github"
+  />
+</section>
+
+<section class="github-summary">
+  <div class="github-summary__header">
+    <h2 class="section-title">GitHub</h2>
+    <a routerLink="/settings" class="github-summary__link">Gérer la sync →</a>
+  </div>
+  <div class="github-summary__stats">
+    <span>{{ githubStats().reposCount }} repos</span>
+    <span>·</span>
+    <span>{{ githubStats().totalForks }} forks</span>
+    <span>·</span>
+    <span>{{ githubStats().totalOpenIssues }} issues ouvertes</span>
+  </div>
 </section>
 
 <section class="recent-activity">

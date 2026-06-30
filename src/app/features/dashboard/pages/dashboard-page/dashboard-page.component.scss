@@ -12,6 +12,40 @@
   color: var(--text-primary);
 }
 
+.github-summary {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+
+    .section-title {
+      margin: 0;
+    }
+  }
+
+  &__link {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__stats {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+}
+
 .recent-activity {
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);

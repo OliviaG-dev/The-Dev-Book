@@ -1,6 +1,7 @@
 import { computed, Injectable } from '@angular/core';
 
 import { ActivityItem } from '../models';
+import { GitHubService } from './github.service';
 import { NoteService } from './note.service';
 import { ProjectService } from './project.service';
 import { PromptService } from './prompt.service';
@@ -12,6 +13,8 @@ export class DashboardService {
     promptsCount: this.promptService.count(),
     notesCount: this.noteService.count(),
   }));
+
+  readonly githubStats = computed(() => this.githubService.aggregateStats());
 
   readonly recentActivity = computed<ActivityItem[]>(() => {
     const items: ActivityItem[] = [
@@ -47,5 +50,6 @@ export class DashboardService {
     private readonly projectService: ProjectService,
     private readonly promptService: PromptService,
     private readonly noteService: NoteService,
+    private readonly githubService: GitHubService,
   ) {}
 }

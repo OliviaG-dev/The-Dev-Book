@@ -1,15 +1,97 @@
 <app-page-header
   title="Settings"
-  subtitle="Configuration de l'application — disponible dans les prochaines versions."
+  subtitle="Configuration et synchronisation des repositories GitHub liés à vos projets."
 />
 
-<div class="settings-placeholder">
-  <mat-icon>construction</mat-icon>
-  <h2>Prochainement</h2>
-  <ul>
-    <li>Synchronisation GitHub</li>
+<section class="settings-section">
+  <div class="settings-section__header">
+    <div>
+      <h2 class="settings-section__title">
+        <mat-icon>sync</mat-icon>
+        Synchronisation GitHub
+      </h2>
+      <p class="settings-section__desc">
+        Récupère les statistiques des repos liés via l'URL GitHub de chaque projet.
+      </p>
+    </div>
+    <button
+      type="button"
+      class="sync-button"
+      [disabled]="syncStatus().isSyncing"
+      (click)="syncGitHub()"
+    >
+      <mat-icon>{{ syncStatus().isSyncing ? 'hourglass_top' : 'cloud_sync' }}</mat-icon>
+      {{ syncStatus().isSyncing ? 'Synchronisation…' : 'Synchroniser' }}
+    </button>
+  </div>
+
+  @if (syncStatus().lastSyncAt) {
+    <p class="sync-meta">
+      Dernière sync : {{ syncStatus().lastSyncAt | timeAgo }}
+    </p>
+  }
+
+  @if (syncStatus().error) {
+    <p class="sync-error">{{ syncStatus().error }}</p>
+  }
+
+  <div class="github-stats">
+    <div class="github-stat">
+      <span class="github-stat__value">{{ aggregateStats().reposCount }}</span>
+      <span class="github-stat__label">Repos</span>
+    </div>
+    <div class="github-stat">
+      <span class="github-stat__value">{{ aggregateStats().totalStars }}</span>
+      <span class="github-stat__label">Stars</span>
+    </div>
+    <div class="github-stat">
+      <span class="github-stat__value">{{ aggregateStats().totalForks }}</span>
+      <span class="github-stat__label">Forks</span>
+    </div>
+    <div class="github-stat">
+      <span class="github-stat__value">{{ aggregateStats().totalOpenIssues }}</span>
+      <span class="github-stat__label">Issues ouvertes</span>
+    </div>
+  </div>
+
+  @if (repos().length > 0) {
+    <ul class="repo-list">
+      @for (repo of repos(); track repo.id) {
+        <li class="repo-item">
+          <div class="repo-item__info">
+            <a [href]="repo.url" target="_blank" rel="noopener" class="repo-item__name">
+              {{ repo.fullName }}
+              <mat-icon>open_in_new</mat-icon>
+            </a>
+            <span class="repo-item__meta">
+              @if (repo.language) {
+                {{ repo.language }} ·
+              }
+              Mis à jour {{ repo.updatedAt | timeAgo }}
+            </span>
+          </div>
+          <div class="repo-item__stats">
+            <span><mat-icon>star</mat-icon>{{ repo.stars }}</span>
+            <span><mat-icon>fork_right</mat-icon>{{ repo.forks }}</span>
+            <span><mat-icon>bug_report</mat-icon>{{ repo.openIssues }}</span>
+          </div>
+          <a class="repo-item__link" [routerLink]="['/projects', repo.projectId]">
+            Voir le projet
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>
+
+<section class="settings-section settings-section--muted">
+  <h2 class="settings-section__title">
+    <mat-icon>schedule</mat-icon>
+    Prochainement
+  </h2>
+  <ul class="upcoming-list">
     <li>Thème clair / sombre</li>
     <li>Export Markdown / PDF</li>
-    <li>Authentification</li>
+    <li>Authentification OAuth GitHub</li>
   </ul>
-</div>
+</section>

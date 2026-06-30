@@ -10,5 +10,6 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'notes', renderMode: RenderMode.Prerender },
   { path: 'notes/:id', renderMode: RenderMode.Server },
   { path: 'settings', renderMode: RenderMode.Prerender },
+  { path: 'search', renderMode: RenderMode.Server },
   { path: '**', renderMode: RenderMode.Server },
 ];

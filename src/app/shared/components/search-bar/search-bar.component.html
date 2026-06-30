@@ -1,0 +1,49 @@
+<form class="search-bar" (submit)="onSubmit($event)">
+  <mat-icon class="search-bar__icon">search</mat-icon>
+  <input
+    #searchInput
+    class="search-bar__input"
+    type="search"
+    placeholder="Rechercher projets, prompts, notes…"
+    [value]="query()"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    aria-label="Recherche globale"
+    autocomplete="off"
+  />
+  @if (query()) {
+    <button type="button" class="search-bar__clear" (click)="clear()" aria-label="Effacer">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+
+  @if (isOpen() && query()) {
+    <div class="search-bar__dropdown" role="listbox">
+      @if (results().length === 0) {
+        <p class="search-bar__empty">Aucun résultat pour « {{ query() }} »</p>
+      } @else {
+        <ul class="search-bar__results">
+          @for (result of results().slice(0, 6); track result.id + result.type) {
+            <li>
+              <a
+                class="search-bar__result"
+                [routerLink]="result.route"
+                (mousedown)="$event.preventDefault()"
+              >
+                <span class="search-bar__result-type">{{ typeLabels[result.type] }}</span>
+                <span class="search-bar__result-title">{{ result.title }}</span>
+                <span class="search-bar__result-excerpt">{{ result.excerpt }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+        @if (results().length > 6) {
+          <button type="submit" class="search-bar__view-all">
+            Voir tous les résultats ({{ results().length }})
+          </button>
+        }
+      }
+    </div>
+  }
+</form>

@@ -1,0 +1,41 @@
+<app-page-header
+  title="Recherche"
+  [subtitle]="query() ? results().length + ' résultat(s) pour « ' + query() + ' »' : 'Saisissez un terme dans la barre de recherche.'"
+/>
+
+@if (!query()) {
+  <app-empty-state
+    icon="search"
+    title="Recherche globale"
+    message="Recherchez dans vos projets, prompts et notes depuis la barre en haut de l'application."
+  />
+} @else if (results().length === 0) {
+  <app-empty-state
+    icon="search_off"
+    title="Aucun résultat"
+    [message]="'Aucun contenu ne correspond à « ' + query() + ' ».'"
+  />
+} @else {
+  <ul class="search-results">
+    @for (result of results(); track result.id + result.type) {
+      <li>
+        <a class="search-result" [routerLink]="result.route">
+          <div class="search-result__icon">
+            <mat-icon>{{ typeIcons[result.type] }}</mat-icon>
+          </div>
+          <div class="search-result__content">
+            <div class="search-result__meta">
+              <span class="search-result__type">{{ typeLabels[result.type] }}</span>
+            </div>
+            <h2 class="search-result__title">{{ result.title }}</h2>
+            <p class="search-result__excerpt">{{ result.excerpt }}</p>
+            @if (result.tags.length > 0) {
+              <app-tag-list [tags]="result.tags" />
+            }
+          </div>
+          <mat-icon class="search-result__arrow">chevron_right</mat-icon>
+        </a>
+      </li>
+    }
+  </ul>
+}

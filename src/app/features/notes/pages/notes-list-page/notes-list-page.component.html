@@ -3,15 +3,22 @@
   subtitle="Base de connaissances personnelle pour consolider votre apprentissage."
 />
 
-@if (notes().length === 0) {
+<app-tag-filter
+  [tags]="noteTags()"
+  [selectedTags]="selectedTags()"
+  (tagToggle)="onTagToggle($event)"
+  (clearAll)="onClearTags()"
+/>
+
+@if (filteredNotes().length === 0) {
   <app-empty-state
     icon="note"
     title="Aucune note"
-    message="Vos notes d'apprentissage apparaîtront ici."
+    message="Aucune note ne correspond aux filtres sélectionnés."
   />
 } @else {
   <div class="notes-grid">
-    @for (note of notes(); track note.id) {
+    @for (note of filteredNotes(); track note.id) {
       <app-note-card [note]="note" />
     }
   </div>

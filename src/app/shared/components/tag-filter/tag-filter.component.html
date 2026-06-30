@@ -1,0 +1,25 @@
+@if (tags().length > 0) {
+  <div class="tag-filter">
+    <div class="tag-filter__header">
+      <span class="tag-filter__label">Filtrer par tag</span>
+      @if (selectedTags().length > 0) {
+        <button type="button" class="tag-filter__clear" (click)="onClearAll()">
+          Effacer ({{ selectedTags().length }})
+        </button>
+      }
+    </div>
+    <div class="tag-filter__list">
+      @for (tag of tags(); track tag.label) {
+        <button
+          type="button"
+          class="tag-filter__chip"
+          [class.tag-filter__chip--active]="isSelected(tag.label)"
+          (click)="onToggle(tag.label)"
+        >
+          {{ tag.label }}
+          <span class="tag-filter__count">{{ tag.count }}</span>
+        </button>
+      }
+    </div>
+  </div>
+}

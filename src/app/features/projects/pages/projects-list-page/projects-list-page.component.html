@@ -3,15 +3,22 @@
   subtitle="Portfolio de vos projets personnels avec stack, difficultés et leçons apprises."
 />
 
-@if (projects().length === 0) {
+<app-tag-filter
+  [tags]="projectTags()"
+  [selectedTags]="selectedTags()"
+  (tagToggle)="onTagToggle($event)"
+  (clearAll)="onClearTags()"
+/>
+
+@if (filteredProjects().length === 0) {
   <app-empty-state
     icon="folder_open"
     title="Aucun projet"
-    message="Vos projets apparaîtront ici une fois ajoutés."
+    message="Aucun projet ne correspond aux filtres sélectionnés."
   />
 } @else {
   <div class="projects-grid">
-    @for (project of projects(); track project.id) {
+    @for (project of filteredProjects(); track project.id) {
       <app-project-card [project]="project" />
     }
   </div>

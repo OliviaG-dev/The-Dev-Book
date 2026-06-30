@@ -13,7 +13,7 @@
   </button>
   @for (category of categories(); track category) {
     <button
-       class="category-filter"
+      class="category-filter"
       [class.category-filter--active]="selectedCategory() === category"
       (click)="selectCategory(category)"
     >
@@ -22,11 +22,18 @@
   }
 </div>
 
+<app-tag-filter
+  [tags]="promptTags()"
+  [selectedTags]="selectedTags()"
+  (tagToggle)="onTagToggle($event)"
+  (clearAll)="onClearTags()"
+/>
+
 @if (filteredPrompts().length === 0) {
   <app-empty-state
     icon="auto_awesome"
     title="Aucun prompt"
-    message="Aucun prompt dans cette catégorie."
+    message="Aucun prompt ne correspond aux filtres sélectionnés."
   />
 } @else {
   <div class="prompts-grid">

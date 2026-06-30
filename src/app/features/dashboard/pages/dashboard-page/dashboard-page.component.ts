@@ -24,6 +24,7 @@ export class DashboardPageComponent {
   private readonly dashboardService = inject(DashboardService);
 
   readonly stats = this.dashboardService.stats;
+  readonly githubStats = this.dashboardService.githubStats;
   readonly recentActivity = this.dashboardService.recentActivity;
 
   readonly activityIcons: Record<string, string> = {

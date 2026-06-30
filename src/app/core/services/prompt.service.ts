@@ -1,6 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 
 import { Prompt, PromptCategory } from '../models';
+import { matchesTags } from '../utils/tag.utils';
 import { MOCK_PROMPTS } from './mock-data/prompts.mock';
 
 @Injectable({ providedIn: 'root' })
@@ -24,5 +25,12 @@ export class PromptService {
       return this.prompts();
     }
     return this.prompts().filter((prompt) => prompt.category === category);
+  }
+
+  filterByTags(prompts: Prompt[], selectedTags: string[]): Prompt[] {
+    if (selectedTags.length === 0) {
+      return prompts;
+    }
+    return prompts.filter((prompt) => matchesTags(prompt.tags, selectedTags));
   }
 }
