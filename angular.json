@@ -33,17 +33,17 @@
             "styles": [
               "src/styles.scss"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
             }
           },
           "configurations": {
             "production": {
+              "server": "src/main.server.ts",
+              "outputMode": "server",
+              "ssr": {
+                "entry": "src/server.ts"
+              },
               "budgets": [
                 {
                   "type": "initial",

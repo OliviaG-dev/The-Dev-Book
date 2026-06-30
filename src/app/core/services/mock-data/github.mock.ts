@@ -1,29 +1,30 @@
 import { GitHubRepoStats } from '../../models';
 
+/** Fallback minimal si l'API GitHub échoue (stats réelles après sync). */
 const MOCK_GITHUB_REPOS: GitHubRepoStats[] = [
-  {
-    id: 'tarotmind',
-    projectId: 'tarotmind',
-    name: 'tarotmind',
-    fullName: 'example/tarotmind',
-    url: 'https://github.com/example/tarotmind',
-    stars: 12,
-    forks: 3,
-    openIssues: 2,
-    language: 'TypeScript',
-    updatedAt: new Date('2026-06-18'),
-  },
   {
     id: 'dev-book',
     projectId: 'dev-book',
-    name: 'the-dev-book',
-    fullName: 'example/the-dev-book',
-    url: 'https://github.com/example/the-dev-book',
-    stars: 5,
-    forks: 1,
+    name: 'The-Dev-Book',
+    fullName: 'OliviaG-dev/The-Dev-Book',
+    url: 'https://github.com/OliviaG-dev/The-Dev-Book',
+    stars: 0,
+    forks: 0,
     openIssues: 0,
     language: 'TypeScript',
     updatedAt: new Date('2026-06-29'),
+  },
+  {
+    id: 'tarotmind',
+    projectId: 'tarotmind',
+    name: 'TarotMind',
+    fullName: 'OliviaG-dev/TarotMind',
+    url: 'https://github.com/OliviaG-dev/TarotMind',
+    stars: 0,
+    forks: 0,
+    openIssues: 0,
+    language: 'TypeScript',
+    updatedAt: new Date('2026-06-20'),
   },
 ];
 
