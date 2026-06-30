@@ -153,13 +153,15 @@ npm test
 
 ### CI (GitHub Actions)
 
-Le workflow `.github/workflows/ci.yml` s'exécute sur chaque **push** et **pull request** vers `main` / `master` :
+Le workflow `.github/workflows/ci.yml` s'exécute sur chaque **push** et **pull request** vers `master` :
 
 1. `npm ci`
 2. `npm run build`
 3. `npm test -- --watch=false`
 
 ![CI](https://github.com/OliviaG-dev/The-Dev-Book/actions/workflows/ci.yml/badge.svg)
+
+Voir [CONTRIBUTING.md](CONTRIBUTING.md) pour le workflow Git (branche → PR, pas de push direct sur `master`).
 
 ## Routes
 
