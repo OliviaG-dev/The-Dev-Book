@@ -84,6 +84,52 @@
   }
 </section>
 
+<section class="settings-section">
+  <div class="settings-section__header">
+    <div>
+      <h2 class="settings-section__title">
+        <mat-icon>menu_book</mat-icon>
+        Synchronisation Dev Book
+      </h2>
+      <p class="settings-section__desc">
+        Récupère le contenu du dossier <code>.devbook/</code> de chaque dépôt GitHub
+        (priorité aux fichiers <code>02-tech-*</code> et au champ
+        <code>newTechnologies</code>).
+      </p>
+    </div>
+    <button
+      type="button"
+      class="sync-button"
+      [disabled]="devBookSyncStatus().isSyncing"
+      (click)="syncDevBook()"
+    >
+      <mat-icon>{{ devBookSyncStatus().isSyncing ? 'hourglass_top' : 'cloud_download' }}</mat-icon>
+      {{ devBookSyncStatus().isSyncing ? 'Synchronisation…' : 'Sync contenu Dev Book' }}
+    </button>
+  </div>
+
+  @if (devBookSyncStatus().lastSyncAt) {
+    <p class="sync-meta">
+      Dernière sync : {{ devBookSyncStatus().lastSyncAt | timeAgo }}
+    </p>
+  }
+
+  @if (devBookSyncStatus().error) {
+    <p class="sync-error">{{ devBookSyncStatus().error }}</p>
+  }
+
+  <div class="github-stats">
+    <div class="github-stat">
+      <span class="github-stat__value">{{ devBookSyncStatus().syncedCount }}</span>
+      <span class="github-stat__label">Projets synchronisés</span>
+    </div>
+    <div class="github-stat">
+      <span class="github-stat__value">{{ devBookSyncStatus().missingCount }}</span>
+      <span class="github-stat__label">Sans dossier .devbook</span>
+    </div>
+  </div>
+</section>
+
 <section class="settings-section settings-section--muted">
   <h2 class="settings-section__title">
     <mat-icon>schedule</mat-icon>
