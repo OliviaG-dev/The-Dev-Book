@@ -23,6 +23,17 @@
       }
     </div>
     <app-tag-list [tags]="project.technologies" size="md" />
+    @if (project.newTechnologies && project.newTechnologies.length > 0) {
+      <div class="project-header__new-tech">
+        <h3 class="project-header__new-tech-label">Nouvelles technologies</h3>
+        <app-tag-list [tags]="project.newTechnologies" size="md" variant="accent" />
+      </div>
+    }
+    @if (project.devBookSyncedAt) {
+      <p class="project-header__devbook-sync">
+        Contenu Dev Book synchronisé {{ project.devBookSyncedAt | timeAgo }}
+      </p>
+    }
   </header>
 
   @for (section of project.sections; track section.title) {

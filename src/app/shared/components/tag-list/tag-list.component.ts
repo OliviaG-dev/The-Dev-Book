@@ -9,4 +9,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 export class TagListComponent {
   readonly tags = input.required<string[]>();
   readonly size = input<'sm' | 'md'>('sm');
+  readonly variant = input<'default' | 'accent'>('default');
 }

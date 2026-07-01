@@ -8,12 +8,14 @@ export interface Project {
   name: string;
   description: string;
   technologies: string[];
+  newTechnologies?: string[];
   difficulties: string[];
   lessonsLearned: string[];
   githubUrl?: string;
   demoUrl?: string;
   screenshotUrls: string[];
   sections: ProjectSection[];
+  devBookSyncedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
