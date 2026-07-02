@@ -4,5 +4,7 @@
     <span class="note-card__date">{{ note().updatedAt | timeAgo }}</span>
   </div>
   <p class="note-card__preview">{{ note().content }}</p>
-  <app-tag-list [tags]="note().tags" />
+  <div class="note-card__tags">
+    <app-tag-list [tags]="note().tags" />
+  </div>
 </a>

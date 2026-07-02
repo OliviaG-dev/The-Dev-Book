@@ -1,4 +1,4 @@
-import { ProjectSection } from './project.model';
+import { DevBookDocument, ProjectSection } from './project.model';
 
 export interface DevBookProjectOverlay {
   description?: string;
@@ -6,6 +6,7 @@ export interface DevBookProjectOverlay {
   newTechnologies?: string[];
   demoUrl?: string;
   sections?: ProjectSection[];
+  devBookDocuments?: DevBookDocument[];
   difficulties?: string[];
   lessonsLearned?: string[];
   devBookSyncedAt: string;
@@ -17,4 +18,9 @@ export interface DevBookSyncStatus {
   error: string | null;
   syncedCount: number;
   missingCount: number;
+}
+
+export interface ProjectDevBookSyncState {
+  isSyncing: boolean;
+  error: string | null;
 }

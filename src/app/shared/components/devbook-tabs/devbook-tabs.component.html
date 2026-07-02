@@ -1,0 +1,41 @@
+@if (documents().length > 0) {
+  <div class="devbook-tabs">
+    <nav class="devbook-tabs__nav" role="tablist" aria-label="Documentation Dev Book">
+      @for (document of documents(); track document.fileName) {
+        <button
+          type="button"
+          class="devbook-tabs__tab"
+          role="tab"
+          [class.devbook-tabs__tab--active]="isActive(document.fileName)"
+          [attr.aria-selected]="isActive(document.fileName)"
+          (click)="selectTab(document.fileName)"
+        >
+          <span class="devbook-tabs__tab-label">{{ document.label }}</span>
+          <span class="devbook-tabs__tab-file">{{ document.fileName }}</span>
+          @if (document.isTech) {
+            <span class="devbook-tabs__badge">Tech</span>
+          }
+        </button>
+      }
+    </nav>
+
+    @if (activeDocument(); as document) {
+      <div class="devbook-tabs__panel" role="tabpanel">
+        <header class="devbook-tabs__panel-header">
+          <mat-icon>description</mat-icon>
+          <div>
+            <h2 class="devbook-tabs__panel-title">{{ document.label }}</h2>
+            <p class="devbook-tabs__panel-file">{{ document.fileName }}</p>
+          </div>
+        </header>
+
+        @for (section of document.sections; track section.title) {
+          <article class="devbook-section">
+            <h3 class="devbook-section__title">{{ section.title }}</h3>
+            <div class="devbook-markdown" [innerHTML]="section.content | devbookMarkdown"></div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+}

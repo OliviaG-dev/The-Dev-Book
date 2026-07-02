@@ -5,5 +5,7 @@
   </div>
   <h3 class="prompt-card__title">{{ prompt().title }}</h3>
   <p class="prompt-card__description">{{ prompt().description }}</p>
-  <app-tag-list [tags]="prompt().tags" />
+  <div class="prompt-card__tags">
+    <app-tag-list [tags]="prompt().tags" />
+  </div>
 </a>

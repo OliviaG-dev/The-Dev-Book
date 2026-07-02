@@ -117,6 +117,9 @@ export class ProjectService {
           }
         : {}),
       ...(overlay.sections?.length ? { sections: overlay.sections } : {}),
+      ...(overlay.devBookDocuments?.length
+        ? { devBookDocuments: overlay.devBookDocuments }
+        : {}),
       ...(overlay.difficulties?.length ? { difficulties: overlay.difficulties } : {}),
       ...(overlay.lessonsLearned?.length
         ? { lessonsLearned: overlay.lessonsLearned }

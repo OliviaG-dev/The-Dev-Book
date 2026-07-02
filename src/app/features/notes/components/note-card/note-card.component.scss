@@ -1,13 +1,22 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .note-card {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.75rem;
+  height: 100%;
+  min-height: 13.75rem;
   padding: 1.25rem;
   background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.15s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.15s ease;
 
   &:hover {
     border-color: var(--border-hover);
@@ -19,23 +28,32 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.75rem;
+    min-height: 1.5rem;
   }
 
   &__title {
     margin: 0;
     font-size: 1rem;
     font-weight: 600;
+    line-height: 1.3;
     color: var(--text-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   &__date {
     font-size: 0.75rem;
     color: var(--text-muted);
     flex-shrink: 0;
+    white-space: nowrap;
   }
 
   &__preview {
+    flex: 1;
     margin: 0;
+    min-height: 3.65625rem;
     font-size: 0.8125rem;
     line-height: 1.5;
     color: var(--text-secondary);
@@ -44,5 +62,11 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     white-space: pre-wrap;
+  }
+
+  &__tags {
+    margin-top: auto;
+    min-height: 2.5rem;
+    padding-top: 0.125rem;
   }
 }

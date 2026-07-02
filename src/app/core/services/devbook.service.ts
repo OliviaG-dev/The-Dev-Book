@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-import { DevBookProjectOverlay, DevBookSyncStatus } from '../models';
+import { DevBookProjectOverlay, DevBookSyncStatus, ProjectDevBookSyncState } from '../models';
 import {
   mergeParsedDevBookFiles,
   parseDevBookMarkdown,
@@ -17,9 +17,16 @@ interface GitHubContentItem {
   download_url: string | null;
 }
 
+type ProjectSyncResult = 'synced' | 'missing' | 'invalid-url';
+
 const RAW_CONTENT_HEADERS = new HttpHeaders({
   Accept: 'application/vnd.github.raw',
 });
+
+const EMPTY_PROJECT_SYNC_STATE: ProjectDevBookSyncState = {
+  isSyncing: false,
+  error: null,
+};
 
 @Injectable({ providedIn: 'root' })
 export class DevBookService {
@@ -34,10 +41,13 @@ export class DevBookService {
     missingCount: 0,
   });
 
+  private readonly projectSyncStatesState = signal<Record<string, ProjectDevBookSyncState>>({});
+
   readonly syncStatus = this.syncStatusState.asReadonly();
+  readonly projectSyncStates = this.projectSyncStatesState.asReadonly();
 
   async syncFromProjects(): Promise<void> {
-    if (this.syncStatusState().isSyncing) {
+    if (this.isAnySyncInProgress()) {
       return;
     }
 
@@ -57,23 +67,17 @@ export class DevBookService {
         .filter((project) => project.githubUrl);
 
       for (const project of projectsWithGithub) {
-        const parsed = this.parseGithubUrl(project.githubUrl!);
-        if (!parsed) {
-          missingCount++;
+        const result = await this.syncSingleProject(project.id);
+
+        if (result === 'synced') {
+          syncedCount++;
           continue;
         }
 
-        try {
-          const overlay = await this.fetchDevBookOverlay(parsed.owner, parsed.repo);
-          if (!overlay) {
-            missingCount++;
-            continue;
-          }
-
-          this.projectService.applyDevBookOverlay(project.id, overlay);
-          syncedCount++;
-        } catch {
-          missingCount++;
+        missingCount++;
+        if (result === 'invalid-url') {
+          partialError = 'Synchronisation partielle — certaines URLs GitHub sont invalides.';
+        } else {
           partialError = 'Synchronisation partielle — certains dépôts sont inaccessibles.';
         }
       }
@@ -94,6 +98,74 @@ export class DevBookService {
         missingCount,
       });
     }
+  }
+
+  async syncProject(projectId: string): Promise<void> {
+    if (this.isAnySyncInProgress()) {
+      return;
+    }
+
+    this.setProjectSyncState(projectId, { isSyncing: true, error: null });
+
+    try {
+      const result = await this.syncSingleProject(projectId);
+
+      if (result === 'synced') {
+        this.setProjectSyncState(projectId, { isSyncing: false, error: null });
+        return;
+      }
+
+      const error =
+        result === 'invalid-url'
+          ? 'URL GitHub invalide pour ce projet.'
+          : 'Dossier .devbook/ introuvable ou vide sur ce dépôt.';
+
+      this.setProjectSyncState(projectId, { isSyncing: false, error });
+    } catch {
+      this.setProjectSyncState(projectId, {
+        isSyncing: false,
+        error: 'Échec de la synchronisation Dev Book.',
+      });
+    }
+  }
+
+  getProjectSyncState(projectId: string): ProjectDevBookSyncState {
+    return this.projectSyncStatesState()[projectId] ?? EMPTY_PROJECT_SYNC_STATE;
+  }
+
+  isAnySyncInProgress(): boolean {
+    if (this.syncStatusState().isSyncing) {
+      return true;
+    }
+
+    return Object.values(this.projectSyncStatesState()).some((state) => state.isSyncing);
+  }
+
+  private async syncSingleProject(projectId: string): Promise<ProjectSyncResult> {
+    const project = this.projectService.getById(projectId);
+    if (!project?.githubUrl) {
+      return 'invalid-url';
+    }
+
+    const parsed = this.parseGithubUrl(project.githubUrl);
+    if (!parsed) {
+      return 'invalid-url';
+    }
+
+    const overlay = await this.fetchDevBookOverlay(parsed.owner, parsed.repo);
+    if (!overlay) {
+      return 'missing';
+    }
+
+    this.projectService.applyDevBookOverlay(projectId, overlay);
+    return 'synced';
+  }
+
+  private setProjectSyncState(projectId: string, state: ProjectDevBookSyncState): void {
+    this.projectSyncStatesState.update((states) => ({
+      ...states,
+      [projectId]: state,
+    }));
   }
 
   private async fetchDevBookOverlay(
@@ -146,6 +218,10 @@ export class DevBookService {
 
     if (merged.sections.length > 0) {
       overlay.sections = merged.sections;
+    }
+
+    if (merged.documents.length > 0) {
+      overlay.devBookDocuments = merged.documents;
     }
 
     if (merged.difficulties.length > 0) {

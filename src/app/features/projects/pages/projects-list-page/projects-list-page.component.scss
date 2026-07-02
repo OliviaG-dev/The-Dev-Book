@@ -1,5 +1,10 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  align-items: stretch;
   gap: 1rem;
+
+  app-project-card {
+    height: 100%;
+  }
 }

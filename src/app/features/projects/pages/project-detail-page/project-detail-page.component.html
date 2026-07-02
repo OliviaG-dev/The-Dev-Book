@@ -29,18 +29,42 @@
         <app-tag-list [tags]="project.newTechnologies" size="md" variant="accent" />
       </div>
     }
-    @if (project.devBookSyncedAt) {
-      <p class="project-header__devbook-sync">
-        Contenu Dev Book synchronisé {{ project.devBookSyncedAt | timeAgo }}
-      </p>
+    @if (project.githubUrl) {
+      <div class="project-header__devbook">
+        <button
+          type="button"
+          class="devbook-sync-button"
+          [disabled]="devBookSync().disabled"
+          (click)="syncDevBook()"
+        >
+          <mat-icon>{{ devBookSync().isSyncing ? 'hourglass_top' : 'cloud_download' }}</mat-icon>
+          {{ devBookSync().isSyncing ? 'Synchronisation…' : 'Sync .devbook' }}
+        </button>
+        @if (project.devBookSyncedAt) {
+          <span class="project-header__devbook-sync">
+            Dernière sync {{ project.devBookSyncedAt | timeAgo }}
+          </span>
+        } @else {
+          <span class="project-header__devbook-hint">
+            Synchronise uniquement le dossier `.devbook/` de ce dépôt.
+          </span>
+        }
+        @if (devBookSync().error) {
+          <p class="project-header__devbook-error">{{ devBookSync().error }}</p>
+        }
+      </div>
     }
   </header>
 
-  @for (section of project.sections; track section.title) {
-    <section class="content-section">
-      <h2 class="content-section__title">{{ section.title }}</h2>
-      <p class="content-section__body">{{ section.content }}</p>
-    </section>
+  @if (project.devBookDocuments && project.devBookDocuments.length > 0) {
+    <app-devbook-tabs [documents]="project.devBookDocuments" />
+  } @else {
+    @for (section of project.sections; track section.title) {
+      <section class="content-section">
+        <h2 class="content-section__title">{{ section.title }}</h2>
+        <p class="content-section__body">{{ section.content }}</p>
+      </section>
+    }
   }
 
   @if (project.difficulties.length > 0) {
