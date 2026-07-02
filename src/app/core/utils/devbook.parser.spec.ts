@@ -70,5 +70,9 @@ Apprentissage E2E.
       'Playwright',
       'Contexte',
     ]);
+    expect(merged.documents.map((document) => document.fileName)).toEqual([
+      '02-tech-playwright.md',
+      'index.md',
+    ]);
   });
 });

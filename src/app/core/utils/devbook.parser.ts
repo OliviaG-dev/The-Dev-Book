@@ -1,4 +1,4 @@
-import { ProjectSection } from '../models';
+import { DevBookDocument, ProjectSection } from '../models';
 
 export const DEVBOOK_FOLDER = '.devbook';
 
@@ -70,9 +70,18 @@ export function parseDevBookMarkdown(fileName: string, rawContent: string): Pars
   };
 }
 
+export function formatDevBookDocumentLabel(fileName: string): string {
+  if (fileName.toLowerCase() === 'index.md') {
+    return "Vue d'ensemble";
+  }
+
+  return humanizeTechFileName(fileName);
+}
+
 export function mergeParsedDevBookFiles(files: ParsedDevBookFile[]): {
   frontmatter: DevBookFrontmatter;
   sections: ProjectSection[];
+  documents: DevBookDocument[];
   difficulties: string[];
   lessonsLearned: string[];
 } {
@@ -96,9 +105,19 @@ export function mergeParsedDevBookFiles(files: ParsedDevBookFile[]): {
 
   const indexSections = indexFile?.sections ?? [];
 
+  const documents = ordered
+    .filter((file) => file.sections.length > 0)
+    .map((file) => ({
+      fileName: file.fileName,
+      label: formatDevBookDocumentLabel(file.fileName),
+      isTech: isTechDocFile(file.fileName),
+      sections: file.sections,
+    }));
+
   return {
     frontmatter,
     sections: [...techSections, ...otherSections, ...indexSections],
+    documents,
     difficulties: uniqueStrings(ordered.flatMap((file) => file.difficulties)),
     lessonsLearned: uniqueStrings(ordered.flatMap((file) => file.lessonsLearned)),
   };

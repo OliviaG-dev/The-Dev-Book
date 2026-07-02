@@ -1,11 +1,13 @@
 @if (tags().length > 0) {
-  <ul
-    class="tag-list"
-    [class]="'tag-list--' + size()"
-    [class.tag-list--accent]="variant() === 'accent'"
-  >
+  <ul class="tag-list" [class]="'tag-list--' + size()">
     @for (tag of tags(); track tag) {
-      <li class="tag-list__item">{{ tag }}</li>
+      <li
+        class="tag-list__item"
+        [class.tag-list__item--accent]="variant() === 'accent'"
+        [style]="variant() === 'default' ? chipStyle(tag) : null"
+      >
+        {{ tag }}
+      </li>
     }
   </ul>
 }

@@ -61,3 +61,4 @@ Principes clés :
 - OAuth GitHub pour dépasser le rate limit API
 - Tests composants sur les pages critiques (filtres, sync Settings)
 - Alias TypeScript `@app/core` pour alléger les imports
+- Documenter d'autres sujets transverses dans `.devbook/` (ex. `05-gestion-donnees.md` à la demande)

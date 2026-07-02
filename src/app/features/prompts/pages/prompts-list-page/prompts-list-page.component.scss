@@ -32,5 +32,10 @@
 .prompts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: stretch;
   gap: 1rem;
+
+  app-prompt-card {
+    height: 100%;
+  }
 }

@@ -3,6 +3,13 @@ export interface ProjectSection {
   content: string;
 }
 
+export interface DevBookDocument {
+  fileName: string;
+  label: string;
+  isTech: boolean;
+  sections: ProjectSection[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -15,6 +22,7 @@ export interface Project {
   demoUrl?: string;
   screenshotUrls: string[];
   sections: ProjectSection[];
+  devBookDocuments?: DevBookDocument[];
   devBookSyncedAt?: Date;
   createdAt: Date;
   updatedAt: Date;

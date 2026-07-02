@@ -14,11 +14,21 @@
           type="button"
           class="tag-filter__chip"
           [class.tag-filter__chip--active]="isSelected(tag.label)"
+          [style]="chipStyle(tag.label)"
           (click)="onToggle(tag.label)"
         >
           {{ tag.label }}
           <span class="tag-filter__count">{{ tag.count }}</span>
         </button>
+      }
+    </div>
+
+    <div class="tag-filter__legend" aria-label="Légende des couleurs par type de tag">
+      @for (item of categoryLegend; track item.category) {
+        <span class="tag-filter__legend-item">
+          <span class="tag-filter__legend-dot" [style]="legendStyle(item.category)"></span>
+          {{ item.label }}
+        </span>
       }
     </div>
   </div>

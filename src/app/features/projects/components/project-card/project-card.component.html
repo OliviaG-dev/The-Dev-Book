@@ -4,5 +4,7 @@
     <span class="project-card__date">{{ project().updatedAt | timeAgo }}</span>
   </div>
   <p class="project-card__description">{{ project().description }}</p>
-  <app-tag-list [tags]="project().technologies" />
+  <div class="project-card__tags">
+    <app-tag-list [tags]="project().technologies" />
+  </div>
 </a>

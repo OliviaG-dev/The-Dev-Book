@@ -10,20 +10,20 @@
     padding: 0.125rem 0.5rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--text-secondary);
-    background: var(--surface-overlay);
-    border: 1px solid var(--border-subtle);
+    color: var(--tag-chip-text, var(--text-secondary));
+    background: var(--tag-chip-bg, var(--surface-overlay));
+    border: 1px solid var(--tag-chip-border, var(--border-subtle));
     border-radius: var(--radius-sm);
+
+    &--accent {
+      color: var(--accent);
+      background: var(--accent-muted);
+      border-color: var(--accent);
+    }
   }
 
   &--md &__item {
     padding: 0.25rem 0.625rem;
     font-size: 0.8125rem;
-  }
-
-  &--accent &__item {
-    color: var(--accent);
-    background: var(--accent-muted);
-    border-color: var(--accent);
   }
 }
